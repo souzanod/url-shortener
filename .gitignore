@@ -7,4 +7,15 @@
 /public/bundles/
 /var/
 /vendor/
+/logs/
+/symfony/
 ###< symfony/framework-bundle ###
+
+###> docker ###
+/docker/logs/
+###< docker ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
