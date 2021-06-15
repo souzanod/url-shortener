@@ -18,4 +18,4 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN printf '[PHP]\ndate.timezone = "America/Sao_Paulo"\n' > /usr/local/etc/php/conf.d/tzone.ini
 RUN "date"
 
-WORKDIR /var/www/url_shortner
+WORKDIR /var/www/url_shortener

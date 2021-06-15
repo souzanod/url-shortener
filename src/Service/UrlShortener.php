@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UrlShortner
+class UrlShortener
 {
     private $validDuration;
     private $em;

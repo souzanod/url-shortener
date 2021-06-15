@@ -33,7 +33,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8080/studos.com.br",
+					"raw": "http://127.0.0.1:8080/youtube.com.br",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -43,7 +43,7 @@
 					],
 					"port": "8080",
 					"path": [
-						"studos.com.br"
+						"youtube.com.br"
 					]
 				}
 			},

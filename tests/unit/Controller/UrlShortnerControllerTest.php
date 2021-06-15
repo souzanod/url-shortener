@@ -2,26 +2,26 @@
 
 namespace App\Tests\Controller;
 
-use App\Controller\UrlShortnerController;
+use App\Controller\UrlShortenerController;
 use App\Entity\Urls;
-use App\Service\UrlShortner;
+use App\Service\UrlShortener;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * @covers App\Controller\UrlShortnerController
+ * @covers App\Controller\UrlShortenerController
  */
-class UrlShortnerControllerTest extends TestCase
+class UrlShortenerControllerTest extends TestCase
 {
     public function testShouldGetShortenedUrl()
     {
         $hash = "abc123ab";
-        $expectedUrl = "http://studos.com.br";
+        $expectedUrl = "http://youtube.com.br";
 
         $urlShortenerMock = $this
-            ->getMockBuilder(UrlShortner::class)
+            ->getMockBuilder(UrlShortener::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['getUrlByHash'])
             ->getMock();
@@ -32,7 +32,7 @@ class UrlShortnerControllerTest extends TestCase
             ->with($hash)
             ->willReturn($expectedUrl);
 
-        $urlShortenerController = new UrlShortnerController($urlShortenerMock);
+        $urlShortenerController = new UrlShortenerController($urlShortenerMock);
 
         $response = $urlShortenerController->index($hash);
 
@@ -41,7 +41,7 @@ class UrlShortnerControllerTest extends TestCase
 
     public function testShouldSaveUrl()
     {
-        $url = "http://studos.com.br";
+        $url = "http://youtube.com.br";
         $expectedHash = "abc123ab";
 
         $expectedUrl = "http://localhost:8080/{$expectedHash}";
@@ -49,7 +49,7 @@ class UrlShortnerControllerTest extends TestCase
         $urlEntityMock = $this->createMock(Urls::class);
 
         $urlShortenerMock = $this
-            ->getMockBuilder(UrlShortner::class)
+            ->getMockBuilder(UrlShortener::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['saveUrl', 'createUrlHash'])
             ->getMock();
@@ -66,7 +66,7 @@ class UrlShortnerControllerTest extends TestCase
             ->willReturn($urlEntityMock);
 
         $urlShortenerControllerMock = $this
-            ->getMockBuilder(UrlShortnerController::class)
+            ->getMockBuilder(UrlShortenerController::class)
             ->setConstructorArgs([$urlShortenerMock])
             ->onlyMethods(['generateUrl', 'json'])
             ->getMock();
@@ -75,7 +75,7 @@ class UrlShortnerControllerTest extends TestCase
             ->expects($this->once())
             ->method('generateUrl')
             ->with(
-                "shortner_get",
+                "shortener_get",
                 ['hash' => $expectedHash],
                 UrlGeneratorInterface::ABSOLUTE_URL
             )

@@ -3,7 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Urls;
-use App\Service\UrlShortner;
+use App\Service\UrlShortener;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
@@ -11,14 +11,14 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @covers App\Service\UrlShortner
+ * @covers App\Service\UrlShortener
  */
-class UrlShortnerTest extends TestCase
+class UrlShortenerTest extends TestCase
 {
     public function testShouldGetUrlByHash()
     {
-        $url = "studos.com.br";
-        $expectedUrl = "http://studos.com.br";
+        $url = "youtube.com.br";
+        $expectedUrl = "http://youtube.com.br";
         
         $expectedHash = "abc123ab";
         $expectedEntity = new Urls();
@@ -57,9 +57,9 @@ class UrlShortnerTest extends TestCase
             ->with('App:Urls')
             ->willReturn($objRepositoryMock);
 
-        $urlShortner = new UrlShortner($validDuration, $entityManagerMock);
+        $urlShortener = new UrlShortener($validDuration, $entityManagerMock);
 
-        $actualUrl = $urlShortner->getUrlByHash($expectedHash);
+        $actualUrl = $urlShortener->getUrlByHash($expectedHash);
 
         $this->assertEquals($expectedUrl, $actualUrl);
     }
@@ -94,16 +94,16 @@ class UrlShortnerTest extends TestCase
             ->with('App:Urls')
             ->willReturn($objRepositoryMock);
 
-        $urlShortner = new UrlShortner($validDuration, $entityManagerMock);
+        $urlShortener = new UrlShortener($validDuration, $entityManagerMock);
 
         $this->expectException(NotFoundHttpException::class);
 
-        $urlShortner->getUrlByHash($hash);
+        $urlShortener->getUrlByHash($hash);
     }
 
     public function testShouldThrowExceptionOnGetUrlByHashWithExpiredDate()
     {
-        $expectedUrl = "studos.com.br";
+        $expectedUrl = "youtube.com.br";
         
         $expectedHash = "abc123ab";
         $expectedEntity = new Urls();
@@ -141,16 +141,16 @@ class UrlShortnerTest extends TestCase
             ->with('App:Urls')
             ->willReturn($objRepositoryMock);
 
-        $urlShortner = new UrlShortner($validDuration, $entityManagerMock);
+        $urlShortener = new UrlShortener($validDuration, $entityManagerMock);
 
         $this->expectException(NotFoundHttpException::class);
 
-        $urlShortner->getUrlByHash($expectedHash);
+        $urlShortener->getUrlByHash($expectedHash);
     }
 
     public function testShouldSaveUrl()
     {
-        $expectedUrl = "studos.com.br";
+        $expectedUrl = "youtube.com.br";
         $expectedHash = "abc123ab";
         $expectedEntity = new Urls();
 
@@ -179,16 +179,16 @@ class UrlShortnerTest extends TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $urlShortner = new UrlShortner($validDuration, $entityManagerMock);
+        $urlShortener = new UrlShortener($validDuration, $entityManagerMock);
 
-        $actualEntity = $urlShortner->saveUrl($expectedHash, $expectedUrl, $date);
+        $actualEntity = $urlShortener->saveUrl($expectedHash, $expectedUrl, $date);
 
         $this->assertEquals($expectedEntity, $actualEntity);
     }
 
     public function testShouldCreateUrlHash()
     {
-        $url = "http://studos.com.br";
+        $url = "http://youtube.com.br";
         $validDuration = "+30 seconds";
 
         $entityManagerMock = $this
@@ -196,9 +196,9 @@ class UrlShortnerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $urlShortner = new UrlShortner($validDuration, $entityManagerMock);
+        $urlShortener = new UrlShortener($validDuration, $entityManagerMock);
 
-        $actualHash = $urlShortner->createUrlHash($url);
+        $actualHash = $urlShortener->createUrlHash($url);
 
         $hashLen = strlen($actualHash);
 

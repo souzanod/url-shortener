@@ -2,43 +2,43 @@
 
 namespace App\Controller;
 
-use App\Service\UrlShortner;
+use App\Service\UrlShortener;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class UrlShortnerController extends AbstractController
+class UrlShortenerController extends AbstractController
 {
-    private $urlShortner;
+    private $urlShortener;
 
-    public function __construct(UrlShortner $urlShortner)
+    public function __construct(UrlShortener $urlShortener)
     {
-        $this->urlShortner = $urlShortner;
+        $this->urlShortener = $urlShortener;
     }
 
     /**
-     * @Route("/{hash}", name="shortner_get", methods={"GET"})
+     * @Route("/{hash}", name="shortener_get", methods={"GET"})
      */
     public function index(string $hash): Response
     {
-        $url = $this->urlShortner->getUrlByHash($hash);
+        $url = $this->urlShortener->getUrlByHash($hash);
 
         return $this->redirect($url);
     }
 
     /**
-     * @Route("/{url}", name="shortner_save", methods={"POST"})
+     * @Route("/{url}", name="shortener_save", methods={"POST"})
      */
     public function save(string $url): Response
     {
-        $hash = $this->urlShortner->createUrlHash($url);
+        $hash = $this->urlShortener->createUrlHash($url);
 
-        $this->urlShortner->saveUrl($hash, $url, new DateTime());
+        $this->urlShortener->saveUrl($hash, $url, new DateTime());
 
         $shortenedUrl = $this->generateUrl(
-            "shortner_get",
+            "shortener_get",
             ['hash' => $hash],
             UrlGeneratorInterface::ABSOLUTE_URL
         );

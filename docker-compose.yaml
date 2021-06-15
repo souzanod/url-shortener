@@ -18,7 +18,7 @@ services:
         depends_on:
             - postgres
         volumes:
-            - .:/var/www/url_shortner/
+            - .:/var/www/url_shortener/
 
     nginx:
         build: docker/nginx
@@ -27,4 +27,4 @@ services:
         depends_on:
             - php
         volumes:
-            - .:/var/www/url_shortner/
+            - .:/var/www/url_shortener/
